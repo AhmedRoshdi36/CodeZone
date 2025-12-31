@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CodeZone.BLL/CodeZone.BLL.csproj" />
+  <Project Path="CodeZone.DAL/CodeZone.DAL.csproj" />
+  <Project Path="CodeZone.MVC/CodeZone.MVC.csproj" />
+</Solution>
