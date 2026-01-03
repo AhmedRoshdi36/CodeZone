@@ -10,13 +10,13 @@
     if ($warehouseSelect.length === 0 || $productSelect.length === 0)
         return;
 
-    // + button
+    // + btm
     $increaseBtn.on("click", function () {
         var currentValue = parseInt($quantityInput.val()) || 0;
         $quantityInput.val(currentValue + 1);
     });
 
-    // - button
+    // - btn
     $decreaseBtn.on("click", function () {
         var currentValue = parseInt($quantityInput.val()) || 0;
         $quantityInput.val(currentValue - 1);
@@ -36,17 +36,19 @@
         $.ajax({
             url: "/StockTransaction/GetCurrentStock",
             type: "GET",
-            data: {
+            data:
+            {
                 warehouseId: warehouseId,
                 productId: productId
             },
-            success: function (stock) {
-                $stockDisplay.html(
-                    "Current Stock: <strong>" + stock + "</strong>"
-                );
-            },
+            success: function (stock)
+                     {
+                         $stockDisplay.html(
+                             "Current Stock: <strong>" + stock + "</strong>"
+                         );
+                    },
             error: function () {
-                $stockDisplay.text("Error loading stock");
+                $stockDisplay.text("Err loading stock");
             }
         });
     }
@@ -54,6 +56,5 @@
     $warehouseSelect.on("change", loadCurrentStock);
     $productSelect.on("change", loadCurrentStock);
 
-    // For Edit View (load on page open)
     loadCurrentStock();
 });

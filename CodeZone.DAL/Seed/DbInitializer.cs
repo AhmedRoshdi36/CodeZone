@@ -21,7 +21,6 @@ public static class DbInitializer
         { 
             new Warehouse { Name = "Main Warehouse" },
             new Warehouse { Name = "Secondary Warehouse" },
-            new Warehouse { Name = "Secondary Warehouse2" }
 
 
         };
@@ -36,7 +35,6 @@ public static class DbInitializer
             new Product { Name = "Mouse", SKU = "MOU-001", Description = "Wireless optical mouse" },
             new Product { Name = "Keyboard", SKU = "KEY-001", Description = "Mechanical keyboard" },
             new Product { Name = "Monitor", SKU = "MON-001", Description = "27-inch 4K monitor" },
-            new Product { Name = "Webcam", SKU = "WEB-001", Description = "HD webcam with microphone" },
            
         };
 
