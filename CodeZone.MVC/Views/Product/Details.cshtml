@@ -1,0 +1,18 @@
+@using CodeZone.DAL.Entities
+@model Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h1>Product Details</h1>
+
+<div>
+    <hr />
+    @await Html.PartialAsync("_ProductDetails", Model)
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+

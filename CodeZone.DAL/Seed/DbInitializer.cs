@@ -20,15 +20,40 @@ public static class DbInitializer
         var warehouses = new List<Warehouse>
         { 
             new Warehouse { Name = "Main Warehouse" },
-            new Warehouse { Name = "Secondary Warehouse" }
+            new Warehouse { Name = "Secondary Warehouse" },
+            new Warehouse { Name = "Secondary Warehouse2" }
 
 
         };
 
         context.Warehouses.AddRange(warehouses);
+        context.SaveChanges();
 
         // Seed Products
-        // seed stock transactions       
+        var products = new List<Product>
+        {
+            new Product { Name = "Laptop", SKU = "LAP-001", Description = "High-performance laptop" },
+            new Product { Name = "Mouse", SKU = "MOU-001", Description = "Wireless optical mouse" },
+            new Product { Name = "Keyboard", SKU = "KEY-001", Description = "Mechanical keyboard" },
+            new Product { Name = "Monitor", SKU = "MON-001", Description = "27-inch 4K monitor" },
+            new Product { Name = "Webcam", SKU = "WEB-001", Description = "HD webcam with microphone" },
+           
+        };
+
+        context.Products.AddRange(products);
+        context.SaveChanges();
+
+        // Seed Stock Transactions
+        var transactions = new List<StockTransaction>
+        {
+            new StockTransaction { WarehouseId = warehouses[0].Id, ProductId = products[0].Id, Quantity = 10},
+            new StockTransaction { WarehouseId = warehouses[0].Id, ProductId = products[1].Id, Quantity = 25},
+            new StockTransaction { WarehouseId = warehouses[1].Id, ProductId = products[0].Id, Quantity = 5 },
+            new StockTransaction { WarehouseId = warehouses[0].Id, ProductId = products[0].Id, Quantity = -2  } // Remove 2 laptops,
+
+        };
+
+        context.StockTransactions.AddRange(transactions);
 
         // Save all changes
         context.SaveChanges();

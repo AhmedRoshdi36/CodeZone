@@ -5,12 +5,19 @@ using Microsoft.EntityFrameworkCore;
 namespace CodeZone.DAL.Repositories.Implementations;
 
 
-public class WarehouseRepository(AppDbContext context) : IWarehouseRepository
+public class WarehouseRepository(AppDbContext context) : GenericRepository<Warehouse>(context),IWarehouseRepository
 {
     public async Task<IEnumerable<Warehouse>> GetAllAsync()
     {
         return await context.Warehouses.ToListAsync();
     }
+    //public async Task<IEnumerable<Warehouse>> GetPaginatedAsync(int pageNumber, int pageSize)
+    //{
+    //    return await context.Warehouses
+    //        .Skip((pageNumber - 1) * pageSize)
+    //        .Take(pageSize)
+    //        .ToListAsync();
+    //}
     public IQueryable<Warehouse> Query()
     {
         return context.Warehouses.AsQueryable();
@@ -46,5 +53,9 @@ public class WarehouseRepository(AppDbContext context) : IWarehouseRepository
     {
         return await context.SaveChangesAsync();
     }
+    //public async Task<int> GetCountAsync()
+    //{
+    //    return await context.Warehouses.CountAsync();
+    //}
 }
 

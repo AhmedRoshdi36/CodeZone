@@ -1,0 +1,18 @@
+@using CodeZone.BLL.ViewModels
+@model WarehouseDetailsViewModel
+
+@{
+    ViewData["Title"] = "Warehouse Details";
+}
+
+<h1>Warehouse Details</h1>
+
+<div>
+    <hr />
+    @await Html.PartialAsync("_WarehouseDetails", Model)
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+

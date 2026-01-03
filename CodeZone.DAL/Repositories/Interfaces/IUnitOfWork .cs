@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodeZone.DAL.Repositories.Interfaces;
+﻿namespace CodeZone.DAL.Repositories.Interfaces;
 
 public interface IUnitOfWork : IDisposable
 {
+    IWarehouseRepository Warehouses { get; }
+    IProductRepository Products { get; }
+    IStockTransactionRepository StockTransactions { get; }
     
-
     Task<int> SaveAsync();
 }

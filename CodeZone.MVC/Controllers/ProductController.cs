@@ -1,30 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using CodeZone.BLL.Services.Interfaces;
 using CodeZone.DAL.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CodeZone.MVC.Controllers
 {
-    public class WarehouseController(IWarehouseService warehouseService) : Controller
+    public class ProductController(IProductService productService) : Controller
     {
-
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 5)
         {
-            var warehouses = await warehouseService.GetAllAsync();
-            return View(warehouses);
+            var result = await productService.GetAllPaginatedAsync(page, pageSize);
+            return View(result);
         }
 
-        
-
-        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var warehouseVM = await warehouseService.GetDetails(id);
-            if (warehouseVM == null)
+            var product = await productService.GetByIdAsync(id);
+            if (product == null)
+            {
                 return NotFound();
-            return View(warehouseVM);
+            }
+            return View(product);
         }
 
-        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -32,64 +30,66 @@ namespace CodeZone.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name")] Warehouse warehouse)
+        public async Task<IActionResult> Create([Bind("Name,SKU,Description")] Product product)
         {
             if (ModelState.IsValid)
-            {
-                var result = await warehouseService.CreateAsync(warehouse);
+            { 
+                var result = await productService.CreateAsync(product);
                 if (result.IsFailure)
                 {
                     ModelState.AddModelError(string.Empty, result.ErrorMessage);
-                    return View(warehouse);
+                    return View(product);
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(warehouse);
+            return View(product);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var warehouse = await warehouseService.GetByIdAsync(id);
-            if (warehouse == null)
+            var product = await productService.GetByIdAsync(id);
+            if (product == null)
                 return NotFound();
-            return View(warehouse);
+            return View(product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Warehouse warehouse)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
-            if (id != warehouse.Id)
+            if (id != product.Id)
+            {
                 return NotFound();
+            }
 
             if (ModelState.IsValid)
             {
-                var result = await warehouseService.UpdateAsync(warehouse);
+                var result = await productService.UpdateAsync(product);
+
                 if (result.IsFailure)
                 {
                     ModelState.AddModelError(string.Empty, result.ErrorMessage);
-                    return View(warehouse);
+                    return View(product);
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(warehouse);
+            return View(product);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var warehouse = await warehouseService.GetByIdAsync(id);
-            if (warehouse == null)
+            var product = await productService.GetByIdAsync(id);
+            if (product == null)
                 return NotFound();
-            return View(warehouse);
+
+            return View(product);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var result = await warehouseService.DeleteAsync(id);
+            var result = await productService.DeleteAsync(id);
 
             if (result.IsFailure)
             {
@@ -101,3 +101,4 @@ namespace CodeZone.MVC.Controllers
         }
     }
 }
+

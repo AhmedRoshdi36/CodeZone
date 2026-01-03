@@ -1,0 +1,92 @@
+@using CodeZone.DAL.Entities
+@model StockTransaction
+
+@{
+    ViewData["Title"] = "Edit Stock Transaction";
+    var warehouses = ViewBag.Warehouses as IEnumerable<Warehouse> ?? new List<Warehouse>();
+    var products = ViewBag.Products as IEnumerable<Product> ?? new List<Product>();
+}
+
+<h1>Edit Stock Transaction</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="WarehouseId" class="control-label">Warehouse</label>
+                <select asp-for="WarehouseId" class="form-control" id="warehouseSelect">
+                    <option value="">-- Select Warehouse --</option>
+                    @foreach (var warehouse in warehouses)
+                    {
+                        <option value="@warehouse.Id"
+                                selected="@(warehouse.Id == Model.WarehouseId)">
+                            @warehouse.Name
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="WarehouseId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ProductId" class="control-label">Product</label>
+                <select asp-for="ProductId" class="form-control" id="productSelect">
+                    <option value="">-- Select Product --</option>
+                    @foreach (var product in products)
+                    {
+                        <option value="@product.Id"
+                                selected="@(product.Id == Model.ProductId)">
+                            @product.Name (@product.SKU)
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Quantity" class="control-label"></label>
+                <div class="input-group">
+                    <button type="button" class="btn btn-outline-secondary" id="decreaseBtn">-</button>
+                    <input asp-for="Quantity"
+                           type="number"
+                           step="1"
+                           class="form-control text-center"
+                           id="quantityInput" />
+                    <button type="button" class="btn btn-outline-secondary" id="increaseBtn">+</button>
+                </div>
+                <small class="form-text text-muted">
+                    Use positive values to add stock, negative to remove
+                </small>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="control-label">Current Stock</label>
+                <div class="alert alert-info" id="currentStockDisplay">
+                    Loading...
+                </div>
+            </div>
+
+            
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+    <script src="~/js/stock-tansaction.js"></script>
+
+
+}

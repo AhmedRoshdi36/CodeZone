@@ -1,5 +1,8 @@
 using CodeZone.BLL.Extensions;
 using CodeZone.DAL.Extensions;
+using CodeZone.DAL.Persistence;
+using CodeZone.DAL.Seed;
+
 namespace CodeZone.MVC
 {
     public class Program
@@ -13,6 +16,13 @@ namespace CodeZone.MVC
             builder.Services.AddDataAccessLayer();
             builder.Services.AddBusinessLogicLayer();
             var app = builder.Build();
+
+            // Seed database
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                DbInitializer.Seed(context);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -30,7 +40,7 @@ namespace CodeZone.MVC
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Warehouse}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

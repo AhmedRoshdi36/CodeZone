@@ -3,6 +3,36 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Inventory Tracking System</h1>
+    <p class="lead">Manage your warehouses, products, and stock transactions</p>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Warehouses</h5>
+                    <p class="card-text">Manage warehouse locations</p>
+                    <a asp-controller="Warehouse" asp-action="Index" class="btn btn-primary">View Warehouses</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Manage product catalog</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-primary">View Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Stock Transactions</h5>
+                    <p class="card-text">Track stock movements</p>
+                    <a asp-controller="StockTransaction" asp-action="Index" class="btn btn-primary">View Transactions</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
